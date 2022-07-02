@@ -1,0 +1,69 @@
+#!/usr/bin/python
+
+import sys
+
+cipher_file = open("ciphertext", "r")
+
+subdict = {
+  "a":"t",
+  "b":"g",
+  "c":"i",
+  "d":"o",
+  "e":"e",
+  "f":"y",
+  "g":"n",
+  "h":"m",
+  "i":"r",
+  "j":"l",
+  "k":"p",
+  "l":"j",
+  "m":"c",
+  "n":"h",
+  "o":"x",
+  "p":"w",
+  "q":"f",
+  "r":"v",
+  "s":"z",
+  "t":"k",
+  "u":"u",
+  "v":"b",
+  "w":"q",
+  "x":"a",
+  "y":"d",
+  "z":"s"
+}
+
+worddict = dict()
+
+
+for line in cipher_file:
+	for word in line.split():
+		word = word.replace(",", "")
+		word = word.replace("-", "")
+		word = word.replace(".", "")
+		word = word.replace(";", "")
+		#print word
+		if word in worddict:
+			worddict[word] += 1
+		else:
+			worddict[word] = 1
+	for char in line:
+		#print char,
+		sys.stdout.flush()
+		sys.stdout.write(char)
+		sys.stdout.flush()
+
+#print worddict
+
+cipher_file.close()
+cipher_file = open("ciphertext", "r")
+for line in cipher_file:
+	for char in line:
+		if char in subdict:
+			sys.stdout.write(subdict[char])
+		else:
+			sys.stdout.write(char)
+		sys.stdout.flush()
+
+
+cipher_file.close()
